@@ -1,0 +1,42 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAedMember() {
+      return request.auth != null
+        && request.auth.token.email.matches('.*@aed\\.cat$');
+    }
+
+    function isDeveloper() {
+      return isAedMember()
+        && exists(/databases/$(database)/documents/settings/developers)
+        && request.auth.token.email in get(/databases/$(database)/documents/settings/developers).data.emails;
+    }
+
+    match /productos/{productId} {
+      allow read, create, update: if isAedMember();
+      allow delete: if isDeveloper();
+    }
+
+    match /moviments/{movimentId} {
+      allow read, create: if isAedMember();
+      allow delete: if isDeveloper();
+    }
+
+    match /settings/developers {
+      allow read: if isAedMember();
+      allow write: if false;
+    }
+
+    match /factures/{facturaId} {
+      allow read: if isAedMember()
+        && (resource.data.usuari == request.auth.token.email || isDeveloper());
+      allow create: if isAedMember()
+        && request.resource.data.usuari == request.auth.token.email
+        && request.resource.data.usuariId == request.auth.uid
+        && request.resource.data.titol is string
+        && request.resource.data.titol.size() > 0;
+      allow delete: if isDeveloper();
+    }
+  }
+}

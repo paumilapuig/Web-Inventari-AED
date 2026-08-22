@@ -1,0 +1,73 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #ece8df;
+  --bg-deep: #1a1a18;
+  --surface: #faf8f4;
+  --surface-raised: #ffffff;
+  --ink: #1a1a18;
+  --ink-soft: #5c5a55;
+  --ink-muted: #8a877f;
+  --accent: #b5a3d9;
+  --accent-hover: #9d89c9;
+  --accent-soft: #ede8f5;
+  --line: #1a1a18;
+  --line-soft: #c8c4bb;
+  --success: #2a6b4a;
+  --danger: #c0392b;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-body: 'Instrument Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --shadow-hard: 4px 4px 0 var(--ink);
+  --shadow-hard-sm: 2px 2px 0 var(--ink);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior-y: auto;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overscroll-behavior-y: auto;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink);
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(181, 163, 217, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 85% 90%, rgba(26, 26, 24, 0.04) 0%, transparent 40%);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+input {
+  color: var(--ink);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--ink);
+}

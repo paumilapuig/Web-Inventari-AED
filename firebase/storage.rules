@@ -1,0 +1,26 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    function isAedMember() {
+      return request.auth != null
+        && request.auth.token.email.matches('.*@aed\\.cat$');
+    }
+
+    function isDeveloper() {
+      return isAedMember()
+        && firestore.exists(/databases/(default)/documents/settings/developers)
+        && request.auth.token.email in firestore.get(/databases/(default)/documents/settings/developers).data.emails;
+    }
+
+    match /productos/{allPaths=**} {
+      allow read, write: if isAedMember();
+    }
+
+    match /factures/{userId}/{fileName} {
+      allow read: if isAedMember() && (request.auth.uid == userId || isDeveloper());
+      allow create: if isAedMember() && request.auth.uid == userId;
+      allow delete: if isDeveloper();
+    }
+  }
+}
