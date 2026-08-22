@@ -120,7 +120,7 @@ export default function ProductComments({ product, onClose }) {
         {deleteError && <p className="error-banner log-error">{deleteError}</p>}
 
         {!loading && !error && comments.length === 0 && (
-          <p className="log-empty">Encara no hi ha comentaris. Escriu el primer!</p>
+          <p className="log-empty">Encara no hi ha comentaris.</p>
         )}
 
         {!loading && !error && comments.length > 0 && (
@@ -161,7 +161,7 @@ export default function ProductComments({ product, onClose }) {
             <textarea
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="Ex: Està a l'armari del passadís, prestatge 2"
+              placeholder="Ex: Ho he deixat dins d'una caixa sota la taula del despatx"
               rows={3}
               maxLength={2000}
               disabled={sending}
