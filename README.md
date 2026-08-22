@@ -63,9 +63,5 @@ npx firebase-tools deploy --only firestore:rules,storage
 
 Guia pas a pas: [docs/firebase.md](docs/firebase.md)
 
-## Pujar a GitHub
-
-Guia detallada (repo privat): [docs/github.md](docs/github.md)
-
 Admins/developers: document Firestore `settings/developers` amb camp `emails` (array).  
 `VITE_DEV_EMAILS` només afecta la UI local; els permisos reals venen de Firestore.
