@@ -4,6 +4,7 @@ service cloud.firestore {
   match /databases/{database}/documents {
     function isAedMember() {
       return request.auth != null
+        && request.auth.token.email != null
         && request.auth.token.email.matches('.*@aed\\.cat$');
     }
 
@@ -16,6 +17,18 @@ service cloud.firestore {
     match /productos/{productId} {
       allow read, create, update: if isAedMember();
       allow delete: if isDeveloper();
+
+      // Notes / comentaris per producte (ordre cronològic a l'app)
+      match /comentaris/{comentariId} {
+        allow read: if isAedMember();
+        allow create: if isAedMember()
+          && request.resource.data.usuari == request.auth.token.email
+          && request.resource.data.text is string
+          && request.resource.data.text.size() > 0
+          && request.resource.data.text.size() <= 2000;
+        allow update: if false;
+        allow delete: if isDeveloper();
+      }
     }
 
     match /moviments/{movimentId} {

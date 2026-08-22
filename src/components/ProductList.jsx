@@ -7,6 +7,7 @@ import AddProductForm from './AddProductForm'
 import AddUnitsModal from './AddUnitsModal'
 import ConsumeModal from './ConsumeModal'
 import MovementsLog from './MovementsLog'
+import ProductComments from './ProductComments'
 import TrashIcon from './TrashIcon'
 
 export default function ProductList() {
@@ -17,6 +18,7 @@ export default function ProductList() {
   const [addUnitsTarget, setAddUnitsTarget] = useState(null)
   const [showGlobalLog, setShowGlobalLog] = useState(false)
   const [productLogTarget, setProductLogTarget] = useState(null)
+  const [productCommentsTarget, setProductCommentsTarget] = useState(null)
   const [search, setSearch] = useState('')
   const [stockView, setStockView] = useState('disponibles')
   const [canDeleteProducts, setCanDeleteProducts] = useState(false)
@@ -229,15 +231,26 @@ export default function ProductList() {
                         <h3>{product.nombre}</h3>
                         <span className="qty-tag">{formatUnitats(product.cantidad)}</span>
                       </div>
-                      <button
-                        type="button"
-                        className="btn-product-history"
-                        onClick={() => setProductLogTarget(product)}
-                        aria-label={`Historial de ${product.nombre}`}
-                        title="Historial del producte"
-                      >
-                        <HistoryIcon />
-                      </button>
+                      <div className="product-card-tools">
+                        <button
+                          type="button"
+                          className="btn-product-history"
+                          onClick={() => setProductCommentsTarget(product)}
+                          aria-label={`Comentaris de ${product.nombre}`}
+                          title="Comentaris"
+                        >
+                          <CommentIcon />
+                        </button>
+                        <button
+                          type="button"
+                          className="btn-product-history"
+                          onClick={() => setProductLogTarget(product)}
+                          aria-label={`Historial de ${product.nombre}`}
+                          title="Historial del producte"
+                        >
+                          <HistoryIcon />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -292,18 +305,18 @@ export default function ProductList() {
 
 
       {productLogTarget && (
-
         <MovementsLog
-
           product={productLogTarget}
-
           onClose={() => setProductLogTarget(null)}
-
         />
-
       )}
 
-
+      {productCommentsTarget && (
+        <ProductComments
+          product={productCommentsTarget}
+          onClose={() => setProductCommentsTarget(null)}
+        />
+      )}
 
       {consumeTarget && (
 
@@ -364,6 +377,20 @@ function HistoryIcon() {
     <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true">
       <circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
       <path d="M8 4.5V8l2.5 1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+function CommentIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true">
+      <path
+        d="M3 3.5h10v7H8.5L5.5 13v-2.5H3v-7z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }

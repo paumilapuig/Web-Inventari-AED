@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useAuth } from '../firebase/AuthContext'
-import aedLogoLletres from '../assets/images/aedlogoLLETRESblanc.webp'
+import aedLogoLletres from '../assets/images/aedlogonegreLLETRESblancques.webp'
 
 export default function Login() {
   const { loginWithGoogle } = useAuth()

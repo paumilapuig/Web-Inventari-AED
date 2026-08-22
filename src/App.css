@@ -909,6 +909,13 @@
   padding: 0;
 }
 
+.product-card-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
+}
+
 .btn-product-history:hover {
   border-color: var(--ink);
   color: var(--ink);
@@ -1063,6 +1070,7 @@
 }
 
 .field input,
+.field textarea,
 .modal input[type='text'],
 .modal input[type='number'] {
   padding: 0.625rem 0.75rem;
@@ -1072,7 +1080,15 @@
   background: var(--surface);
 }
 
+.field textarea {
+  resize: vertical;
+  min-height: 4.5rem;
+  font-family: var(--font-body);
+  line-height: 1.45;
+}
+
 .field input:focus,
+.field textarea:focus,
 .modal input:focus {
   outline: none;
   box-shadow: var(--shadow-hard-sm);
@@ -1528,6 +1544,82 @@
   min-height: 0;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
+}
+
+/* ── Comentaris de producte ── */
+.modal--comments {
+  max-width: 480px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.comments-hint {
+  margin: 0 1.25rem 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+.comments-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 1.25rem;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  overscroll-behavior: contain;
+}
+
+.comment-item {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.comment-item:last-child {
+  border-bottom: none;
+}
+
+.comment-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.comment-user {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--ink-muted);
+}
+
+.comment-item-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.comment-text {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--ink);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.comments-compose {
+  flex-shrink: 0;
+  padding: 0.875rem 1.25rem 1.25rem;
+  border-top: 1px solid var(--line-soft);
+  background: var(--surface);
+}
+
+.comments-compose .field {
+  margin-bottom: 0.75rem;
 }
 
 .log-item {
