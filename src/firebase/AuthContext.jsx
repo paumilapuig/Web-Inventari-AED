@@ -32,7 +32,10 @@ export function AuthProvider({ children }) {
 
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider()
-    provider.setCustomParameters({ hd: ALLOWED_DOMAIN })
+    provider.setCustomParameters({
+      hd: ALLOWED_DOMAIN,
+      prompt: 'select_account',
+    })
 
     const result = await signInWithPopup(auth, provider)
 

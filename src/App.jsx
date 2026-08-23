@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useAuth } from './firebase/AuthContext'
 import Login from './components/Login'
 import ProductList from './components/ProductList'
@@ -15,6 +15,7 @@ function readPageFromLocation() {
 export default function App() {
   const { user, loading, logout } = useAuth()
   const [page, setPage] = useState(readPageFromLocation)
+  const wasLoggedOutRef = useRef(false)
 
   const navigateTo = useCallback((nextPage) => {
     setPage(nextPage)
@@ -23,6 +24,36 @@ export default function App() {
       window.location.hash = nextHash
     }
   }, [])
+
+  const handleLogout = useCallback(() => {
+    wasLoggedOutRef.current = true
+    setPage('inventari')
+    if (window.location.hash === '#factures') {
+      window.location.hash = '#inventari'
+    }
+    logout()
+  }, [logout])
+
+  useEffect(() => {
+    if (loading) return
+
+    if (!user) {
+      wasLoggedOutRef.current = true
+      if (window.location.hash === '#factures') {
+        window.location.hash = '#inventari'
+      }
+      setPage('inventari')
+      return
+    }
+
+    if (wasLoggedOutRef.current) {
+      wasLoggedOutRef.current = false
+      setPage('inventari')
+      if (window.location.hash !== '#inventari') {
+        window.location.hash = '#inventari'
+      }
+    }
+  }, [user, loading])
 
   useEffect(() => {
     const onHashChange = () => setPage(readPageFromLocation())
@@ -93,7 +124,7 @@ export default function App() {
             <span className="user-avatar">{initials}</span>
             <span className="user-email">{user.email}</span>
           </div>
-          <button type="button" className="btn btn-ghost btn-sm" onClick={logout}>
+          <button type="button" className="btn btn-ghost btn-sm" onClick={handleLogout}>
             Sortir
           </button>
         </div>
